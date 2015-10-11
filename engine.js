@@ -287,11 +287,12 @@ function game()
         //Определяем его ход и делаем его.
         if(game.currentStep == 1)
         {
-            while(game.arrayElement[row][col] == 1)
+            while(game.arrayElement[row][col] == 1 ||
+                  game.arrayElement[row][col] == 0)
             {
-                row = Math.floor(Math.random() * 2) + 1;
+                row = rand(0,2);
                 //Рандомомо определяем строку.
-                col = Math.floor(Math.random() * 2) + 1;
+                col = rand(0,3);
                 //Рандомно определяем
 
                 if(game.arrayElement[row][col] == undefined)
@@ -326,4 +327,12 @@ function userAction()
             game.pcStep();
         }
     }
+}
+
+//Функция для генерации рандомных чисел
+function rand(min, max)
+{
+  min = parseInt(min);
+  max = parseInt(max);
+  return Math.floor( Math.random() * (max - min + 1) ) + min;
 }
