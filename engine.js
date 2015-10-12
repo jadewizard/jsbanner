@@ -80,9 +80,9 @@ function drawUpdateObject()
     bg.draw(); //Фон
     firstText.draw(); //Текст #1
     secondText.draw(); //Текст #2
-    userAction();
-    game.drawCross();
-    game.drawZero();
+    userAction(); //Обработчик действия юзера
+    game.drawCross(); //Отрисовка крестиков
+    game.drawZero(); //Отрисовка ноликов
 
     update(); //Обновляем.
 }
@@ -287,13 +287,15 @@ function game()
         //Определяем его ход и делаем его.
         if(game.currentStep == 1)
         {
-            while(game.arrayElement[row][col] == 1 ||
-                  game.arrayElement[row][col] == 0)
+            while(game.arrayElement[row][col] != undefined)
             {
                 row = rand(0,2);
                 //Рандомомо определяем строку.
-                col = rand(0,3);
+                col = rand(1,3);
                 //Рандомно определяем
+
+                // alert(row);
+                // alert(col);
 
                 if(game.arrayElement[row][col] == undefined)
                 {
@@ -304,6 +306,17 @@ function game()
                     break;
                 }
             }
+        }
+    }
+
+    this.winCheck = function()
+    {
+        for(i = 0; i < 2; i++)
+        {
+            if(game.arrayElement[i][0] != undefined &&
+               game.arrayElement[i][0] == game.arrayElement[i][1] &&
+               game.arrayElement[i][1] == game.arrayElement[i][2])
+                alert();
         }
     }
 }
@@ -318,6 +331,8 @@ function userAction()
             {
                 row = Math.floor(event.clientX / (game.height + game.padding + 25));
                 col = Math.floor(event.clientY / (game.width + game.padding + 25));
+                // alert(row);
+                // alert(col);
 
                 game.arrayElement[row][col] = 1;
                 game.currentStep = 1;
@@ -332,7 +347,7 @@ function userAction()
 //Функция для генерации рандомных чисел
 function rand(min, max)
 {
-  min = parseInt(min);
-  max = parseInt(max);
-  return Math.floor( Math.random() * (max - min + 1) ) + min;
+    min = parseInt(min);
+    max = parseInt(max);
+    return Math.floor( Math.random() * (max - min + 1) ) + min;
 }
