@@ -83,6 +83,7 @@ function drawUpdateObject()
     userAction(); //Обработчик действия юзера
     game.drawCross(); //Отрисовка крестиков
     game.drawZero(); //Отрисовка ноликов
+    game.winCheck();
 
     update(); //Обновляем.
 }
@@ -119,11 +120,11 @@ function game()
 
     this.newGame = function()
     {
-        gridArray = new Array(3);
+        gridArray = new Array(2);
 
         for(i = 0; i < 3; i++)
         {
-            gridArray[i] = new Array(3);
+            gridArray[i] = new Array(2);
 
             for(j = 0; j < 3; j++)
             {
@@ -144,7 +145,7 @@ function game()
                 {
                     context.globalAlpha = 0;
                     context.fillStyel = "#000";
-                    context.fillRect((i*(this.width + this.padding)) + 25, (j*(this.height + this.padding)) + 125, 58,56);
+                    context.fillRect(i * (this.width + this.padding) + 26, (j * (this.height + this.padding)) + 126, 50,50);
                 }
             }
         }
@@ -311,14 +312,44 @@ function game()
 
     this.winCheck = function()
     {
-        for(i = 0; i < 2; i++)
+        for(i = 1; i < 4; i++)
         {
-            if(game.arrayElement[i][0] != undefined &&
-               game.arrayElement[i][0] == game.arrayElement[i][1] &&
-               game.arrayElement[i][1] == game.arrayElement[i][2])
+
+            //Строки
+            if(game.arrayElement[0][i] == 1 &&
+               game.arrayElement[1][i] == 1 &&
+               game.arrayElement[2][i] == 1)
+            {
                 alert();
+            }
+
+            //Столбцы
+
+            if(game.arrayElement[i - 1][1] == 1 &&
+               game.arrayElement[i - 1][2] == 1 &&
+               game.arrayElement[i - 1][3] == 1)
+            {
+                alert();
+            }
+
+            //Диагонали
+
+            if(game.arrayElement[0][1] == 1 &&
+               game.arrayElement[1][2] == 1 &&
+               game.arrayElement[2][3] == 1)
+            {
+                alert();
+            }
+
+            if(game.arrayElement[2][1] == 1 &&
+               game.arrayElement[1][2] == 1 &&
+               game.arrayElement[0][3] == 1)
+            {
+                alert();
+            }
         }
     }
+
 }
 
 function userAction()
@@ -327,17 +358,15 @@ function userAction()
     {
         if(game.currentStep == 0)
         {
-            if(event.pageY >= 120 && event.pageY <= 335)
-            {
-                row = Math.floor(event.clientX / (game.height + game.padding + 25));
-                col = Math.floor(event.clientY / (game.width + game.padding + 25));
-                // alert(row);
-                // alert(col);
+            row = Math.floor(event.clientX / (game.height + game.padding + 26));
+            col = Math.floor(event.clientY / (game.width + game.padding + 26));
 
-                game.arrayElement[row][col] = 1;
-                game.currentStep = 1;
-                //alert(print_r(game.arrayElement));
-            }
+            alert(row);
+            alert(col);
+
+            game.arrayElement[row][col] = 1;
+            game.currentStep = 1;
+            //alert(print_r(game.arrayElement));
 
             game.pcStep();
         }
