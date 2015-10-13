@@ -17,6 +17,16 @@ function init()
 
     setInterval(drawUpdateObject, 12);
     //Задаём интервал обновления
+
+    $.ajax({
+        type: 'POST',
+        url: 'handle.php',
+        data: {'param':'1'},
+        success: function(data)
+        {
+            alert();
+        }
+    });
 }
 
 //Задний фон
